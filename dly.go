@@ -214,11 +214,20 @@ func getConfiguration() (conf Configuration) {
 			if err != nil {
 				log.Fatal().Msgf("cannot create empty config file at %s for config file: %v", configFilePath, err)
 			}
-			_, err = f.WriteString("DailyNotesPath: \nFilenameFormat: 2006_01_02\n")
+			// initialize content with defaults
+			defaultValues := Configuration{
+				DailyNotesPath: "YOU MUST SET THIS to your journal folder",
+				FilenameFormat: "2006_01_02",
+				AddTimestamp:   true,
+				AddHashtag:     true,
+				HashtagToAdd:   "from-cli",
+			}
+			defaultValuesB, _ := yaml.Marshal(defaultValues)
+			_, err = f.Write(defaultValuesB)
 			if err != nil {
 				log.Fatal().Msgf("cannot add line to config file at %s for config file: %v", configFilePath, err)
 			}
-			log.Info().Msgf("minimal config file created at %s, you need to edit it to at least add the path to daily notes", configFilePath)
+			log.Info().Msgf("minimal config file created at %s, you MUST now edit it to at least set the path to daily notes", configFilePath)
 			os.Exit(2)
 		} else {
 			log.Fatal().Msgf("cannot check for presence of the config file: %v", err)
