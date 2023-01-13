@@ -206,7 +206,7 @@ func getConfiguration() (conf Configuration) {
 			if err != nil {
 				log.Fatal().Msgf("cannot create empty config file at %s for config file: %v", configFilePath, err)
 			}
-			_, err = f.WriteString("DailyNotesPath: \nFilenameFormat: YYYY_MM_DD\n")
+			_, err = f.WriteString("DailyNotesPath: \nFilenameFormat: 2006_01_02\n")
 			if err != nil {
 				log.Fatal().Msgf("cannot add line to config file at %s for config file: %v", configFilePath, err)
 			}
