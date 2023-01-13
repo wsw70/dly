@@ -59,7 +59,7 @@ The configuration file located in `.config/dly/dly.yml` in your home directory i
 | `DailyNotesPath` | yes | string | Path to the LogSeq daily notes (typically the `journal` folder in Logseq data directory)
 | `FilenameFormat` | yes | string | Format of your daily note, without the `.md` extension. The format follows (weird) Go formatting rules, see the [documentation](https://pkg.go.dev/time) or an [article](https://www.geeksforgeeks.org/time-formatting-in-golang/) for details. As a general rule, when you want to say "the current year" and expected something like `YYYY`, you use `2006` (yes, exactly this string). The "current month" is `01` and the "current day" is `02`. Yes this is insane. The default format (in the auto-generated file) is `2006_01_02` - this corresponds today to `2023_01_13` which in turns points to the file `2023_01_13.md`, which **Logseq** interprets as the date 2023-01-13.|
 | `AddTimestamp` | no | bool | Should your line be prefixed with a bolded timestamp? |
-| `AddHashtag` | no | bool | Should a tag be added at the end of your line? (usually to mark lines that were added though `dly`)     bool   `yaml:"AddHashtag,omitempty"`
+| `AddHashtag` | no | bool | Should a tag be added at the end of your line? (usually to mark lines that were added though `dly`) |
 | `HashtagToAdd` | no | string | The hashtag to add, without `#` |
 
 ## What next?
