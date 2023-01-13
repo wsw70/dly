@@ -182,20 +182,19 @@ func getTodayNote(todayFile string) (content []byte) {
 
 func getConfiguration() (conf Configuration) {
 	var err error
-	var homeDir string = ""
 
 	// check if home variable exists at all
-	// Windows?
-	homeDirWindows, homeExists := os.LookupEnv("USERPROFILE")
-	if homeExists {
-		homeDir = homeDirWindows
+	var homeDir string
+	var homeExists bool
+	for _, homeDirEnv := range []string{"USERPROFILE", "HOME"} {
+		homeDir, homeExists = os.LookupEnv(homeDirEnv)
+		if homeExists {
+			// we have a match for home dir
+			log.Debug().Msgf("found home directory: %v", homeDir)
+			break
+		}
 	}
-	// Linux?
-	homeDirLinux, homeExists := os.LookupEnv("HOME")
-	if homeExists {
-		homeDir = homeDirLinux
-	}
-	// and so?
+	// make sure we actually have homeDir set
 	if homeDir == "" {
 		log.Fatal().Msgf("home directory is not set, I cannot locate your config. Please report this at https://github.com/wsw70/dly/issues/new with your OS")
 	}
