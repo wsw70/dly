@@ -188,10 +188,10 @@ func getConfiguration() (conf Configuration) {
 	}
 	// and so?
 	if homeDir == "" {
-		log.Fatal().Msgf("home directory is not set, I cannot locate your config. Please report this at https://github.com/wsw70/dyl/issues/new with your OS")
+		log.Fatal().Msgf("home directory is not set, I cannot locate your config. Please report this at https://github.com/wsw70/dly/issues/new with your OS")
 	}
-	configFileDir := filepath.Join(homeDir, ".config", "dyl")
-	configFilePath := filepath.Join(configFileDir, "dyl.yml")
+	configFileDir := filepath.Join(homeDir, ".config", "dly")
+	configFilePath := filepath.Join(configFileDir, "dly.yml")
 	_, err = os.Stat(configFilePath)
 	// checking if the config file is there or not
 	if err != nil {

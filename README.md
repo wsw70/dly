@@ -8,7 +8,7 @@ I do not want to start Logseq just for that (even though I mapped it to shortcut
 
 ## Installation
 
-The binary `dsy.exe` (or the relevant one for your OS) attempts to read a configuration file located in `.config/dly/dly.yml` in your home directory. It will try hard to find said home directory and will abort if this is not possible. Should you encounter such a case, please open a bug report (a Github Issue).
+The binary `dly.exe` (or the relevant one for your OS) attempts to read a configuration file located in `.config/dly/dly.yml` in your home directory. It will try hard to find said home directory and will abort if this is not possible. Should you encounter such a case, please open a bug report (a Github Issue).
 
 If the configuration file is not found, a minimal empty one will be created. **It is not yet functional as it**, you need to edit it to add your Logseq daily notes folder (I could automate that if I knew how).
 
@@ -18,7 +18,7 @@ Binaries can be found in the Releases section.
 
 ### Interactive
 
-Run `dsy.exe`, a prompt (`⤑`) appears to allow you to type your line. Once you are done press `Enter` and your daily note is updated.
+Run `dly.exe`, a prompt (`⤑`) appears to allow you to type your line. Once you are done press `Enter` and your daily note is updated.
 
 ### Pure command line
 
@@ -59,7 +59,7 @@ The configuration file located in `.config/dly/dly.yml` in your home directory i
 | `DailyNotesPath` | yes | string | Path to the LogSeq daily notes (typically the `journal` folder in Logseq data directory)
 | `FilenameFormat` | yes | string | Format of your daily note, without the `.md` extension. The format follows (weird) Go formatting rules, see the [documentation](https://pkg.go.dev/time) or an [article](https://www.geeksforgeeks.org/time-formatting-in-golang/) for details. As a general rule, when you want to say "the current year" and expected something like `YYYY`, you use `2006` (yes, exactly this string). The "current month" is `01` and the "current day" is `02`. Yes this is insane. The default format (in the auto-generated file) is `2006_01_02` - this corresponds today to `2023_01_13` which in turns points to the file `2023_01_13.md`, which **Logseq** interprets as the date 2023-01-13.|
 | `AddTimestamp` | no | bool | Should your line be prefixed with a bolded timestamp? |
-| `AddHashtag` | no | bool | Should a tag be added at the end of your line? (usually to mark lines that were added though `dyl`)     bool   `yaml:"AddHashtag,omitempty"`
+| `AddHashtag` | no | bool | Should a tag be added at the end of your line? (usually to mark lines that were added though `dly`)     bool   `yaml:"AddHashtag,omitempty"`
 | `HashtagToAdd` | no | string | The hashtag to add, without `#` |
 
 ## What next?
