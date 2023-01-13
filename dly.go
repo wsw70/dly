@@ -50,15 +50,8 @@ func main() {
 	// get user's configuration
 	conf := getConfiguration()
 
-	var textToAdd string
-	if len(os.Args) == 1 {
-		fmt.Print("⤑ ")
-		scanner := bufio.NewScanner(os.Stdin)
-		scanner.Scan()
-		textToAdd = scanner.Text()
-	} else {
-		textToAdd = strings.Join(os.Args[1:], " ")
-	}
+	// get text to add to daily note
+	textToAdd := getTextToAdd()
 
 	// build today's note full path & filename
 	todayFile := filepath.Join(conf.DailyNotesPath, fmt.Sprintf("%s.md", time.Now().Format(conf.FilenameFormat)))
@@ -68,6 +61,22 @@ func main() {
 	content = addToTodayNote(content, fmt.Sprintf("%s ", textToAdd), conf)
 	// write the note back to file
 	writeTodayNote(content, todayFile, conf)
+}
+
+func getTextToAdd() (textToAdd string) {
+	if len(os.Args) == 1 {
+		// interactive mode
+		fmt.Print("⤑ ")
+		scanner := bufio.NewScanner(os.Stdin)
+		scanner.Scan()
+		textToAdd = scanner.Text()
+	} else if len(os.Args) == 3 && os.Args[1] == "--quotedText" {
+		// text to add is provided quoted
+		textToAdd = os.Args[2]
+	} else {
+		textToAdd = strings.Join(os.Args[1:], " ")
+	}
+	return textToAdd
 }
 
 func addToTodayNote(note []byte, newText string, conf Configuration) (content []byte) {
