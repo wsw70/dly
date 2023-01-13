@@ -36,6 +36,31 @@ only the text `this is the text of my note` will be added to your note.
 
 I would love a workaround, but it seems there are none. This is also the reason for the interactive mode that does not have this limitation.
 
+### Quoted text
+
+Another solution to address the comment problem above is to quote your text.
+
+```
+PS> dly.exe 'this is the text of my note #happy-birthday to you'
+```
+
+This is extremely cumbersome and I would forget to add the quotes half of the time. If you can somehow integrate a quoted text in your command (function, alias, ...) there is a special argument to `dyl`: `--quotedText`:
+
+```
+dly.exe --quotedText 'this is the text of my note #happy-birthday to you'
+```
+
+If you use a tool such as [AutoHotKey](https://www.autohotkey.com/), you could bind a key combination to pop-up a form. It would be even faster than typing in the shell if you are not there.
+Example for a hotkey under `Win-N`:
+
+```
+#n::
+ {
+  IB := InputBox("Add to daily note")
+  Run "D:\Y\dev-perso\dly\dly.exe " . IB.Value
+ }
+```
+
 ## Debugging
 
 If you want to have a more verbose mode or help debug the program, you can set the environment variable `DLY_DEBUG` to the value `yes`. Below is an example of the consequences of setting it inline in PowerShell:
