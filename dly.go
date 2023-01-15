@@ -20,8 +20,8 @@ type Configuration struct {
 	FilenameFormat string `yaml:"FilenameFormat"`
 	AddTimestamp   bool   `yaml:"AddTimestamp"`
 	AppendHashtag  string `yaml:"AppendHashtag"`
-	AddHashtag     bool   `yaml:"AddHashtag"`
-	HashtagToAdd   string `yaml:"HashtagToAdd"`
+	AddHashtag     bool   `yaml:"AddHashtag,omitempty"`
+	HashtagToAdd   string `yaml:"HashtagToAdd,omitempty"`
 }
 
 var log zerolog.Logger
