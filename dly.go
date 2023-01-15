@@ -18,7 +18,8 @@ import (
 type Configuration struct {
 	DailyNotesPath string `yaml:"DailyNotesPath"`
 	FilenameFormat string `yaml:"FilenameFormat"`
-	AddTimestamp   bool   `yaml:"AddTimestamp,omitempty"`
+	AddTimestamp   bool   `yaml:"AddTimestamp"`
+	AppendHashtag  string `yaml:"AppendHashtag"`
 	AddHashtag     bool   `yaml:"AddHashtag,omitempty"`
 	HashtagToAdd   string `yaml:"HashtagToAdd,omitempty"`
 }
@@ -85,8 +86,14 @@ func addToTodayNote(note []byte, newText string, conf Configuration) (content []
 		newText = fmt.Sprintf("**%s** %s", time.Now().Format("15:04"), newText)
 	}
 	// should we postfix it with an hashtag?
-	if conf.AddHashtag {
+	// check for the new parameter AppendHashtag
+	if conf.AppendHashtag != "" {
+		// new parameter
+		newText = fmt.Sprintf("%s #%s", newText, conf.AppendHashtag)
+	} else if conf.AddHashtag {
+		// legacy, deprecated parameter
 		newText = fmt.Sprintf("%s #%s", newText, conf.HashtagToAdd)
+		log.Warn().Msgf("the configuration parameter AddHashtag is deprecated and will be removed in a future version. Use AppendHashtag instead")
 	}
 	// check if the note does not exist
 	if len(note) == 0 {
@@ -219,8 +226,7 @@ func getConfiguration() (conf Configuration) {
 				DailyNotesPath: "YOU MUST SET THIS to your journal folder",
 				FilenameFormat: "2006_01_02",
 				AddTimestamp:   true,
-				AddHashtag:     true,
-				HashtagToAdd:   "from-cli",
+				AppendHashtag:  "from-cli",
 			}
 			defaultValuesB, _ := yaml.Marshal(defaultValues)
 			_, err = f.Write(defaultValuesB)
