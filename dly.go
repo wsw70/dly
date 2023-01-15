@@ -19,6 +19,7 @@ type Configuration struct {
 	DailyNotesPath string `yaml:"DailyNotesPath"`
 	FilenameFormat string `yaml:"FilenameFormat"`
 	AddTimestamp   bool   `yaml:"AddTimestamp,omitempty"`
+	AppendHashtag  string `yaml:"AppendHashtag,omitempty"`
 	AddHashtag     bool   `yaml:"AddHashtag,omitempty"`
 	HashtagToAdd   string `yaml:"HashtagToAdd,omitempty"`
 }
