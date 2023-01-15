@@ -14,6 +14,12 @@ If the configuration file is not found, a minimal empty one will be created. **I
 
 Binaries can be found in the Releases section.
 
+### Building from source
+
+```
+go install github.com/wsw70/dly@latest
+```
+
 ## Usage
 
 ### Interactive
