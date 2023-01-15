@@ -1,4 +1,4 @@
-module dly
+module github.com/wsw70/dly
 
 go 1.19
 
