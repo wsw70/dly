@@ -18,8 +18,8 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version-file: "go.mod"
-      - run: env GOOS=linux GOARCH=amd64 go build -o dly-linux-amd64 .
-      - run: env GOOS=windows GOARCH=amd64 go build -o dly-windows-amd64.exe .
+      - run: env GOOS=linux GOARCH=amd64 go build -ldflags "-X main.compiledVersion=${{ GITHUB.REF_NAME }}" -o dly-linux-amd64 .
+      - run: env GOOS=windows GOARCH=amd64 go build -ldflags "-X main.compiledVersion=${{ GITHUB.REF_NAME }}" -o dly-windows-amd64.exe .
 
       - name: release
         uses: softprops/action-gh-release@v1

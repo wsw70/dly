@@ -8,12 +8,16 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"time"
 
 	"github.com/rs/zerolog"
 	"gopkg.in/yaml.v3"
 )
+
+// version extracted from tag added during compilation
+var compiledVersion string
 
 type Configuration struct {
 	DailyNotesPath string `yaml:"DailyNotesPath"`
@@ -43,6 +47,7 @@ func init() {
 	}
 
 	log = zerolog.New(output).With().Timestamp().Logger()
+	log.Debug().Msgf("debugging initialized, version %s %s/%s", compiledVersion, runtime.GOOS, runtime.GOARCH)
 }
 
 func main() {
