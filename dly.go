@@ -43,6 +43,11 @@ func init() {
 func main() {
 	var content []byte
 
+	// if debugging check immediately for new version
+	if os.Getenv("DLY_DEBUG") == "yes" {
+		CheckUpdateNow()
+	}
+
 	// get user's configuration
 	conf := getConfiguration()
 
@@ -57,6 +62,7 @@ func main() {
 	content = addToTodayNote(content, fmt.Sprintf("%s ", textToAdd), conf)
 	// write the note back to file
 	writeTodayNote(content, todayFile, conf)
+	CheckUpdateNow()
 }
 
 func getTextToAdd() (textToAdd string) {
