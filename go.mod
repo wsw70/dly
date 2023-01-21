@@ -3,6 +3,7 @@ module github.com/wsw70/dly
 go 1.19
 
 require (
+	github.com/golang-module/carbon/v2 v2.2.3
 	github.com/rs/zerolog v1.28.0
 	gopkg.in/yaml.v3 v3.0.1
 )
