@@ -1,6 +1,8 @@
 package main
 
 import (
+	"strconv"
+
 	"github.com/go-resty/resty/v2"
 	"github.com/golang-module/carbon/v2"
 )
@@ -41,7 +43,12 @@ func CheckUpdateNow() {
 	var err error
 
 	// parse buildTime
-	buildTimeParsed := carbon.Parse(buildTime)
+	buildTimeInt, err := strconv.Atoi(buildTime)
+	if err != nil {
+		log.Debug().Msgf("cannot parse buildTime to int: %v", err)
+		return
+	}
+	buildTimeParsed := carbon.CreateFromTimestamp(int64(buildTimeInt))
 
 	// parse GitHub release time
 	var lastUpdateOnGithub releaseApiT
