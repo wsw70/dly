@@ -14,12 +14,12 @@ import (
 )
 
 type Configuration struct {
-	DailyNotesPath string `yaml:"DailyNotesPath"`
-	FilenameFormat string `yaml:"FilenameFormat"`
-	AddTimestamp   bool   `yaml:"AddTimestamp"`
-	AppendHashtag  string `yaml:"AppendHashtag"`
-	AddHashtag     bool   `yaml:"AddHashtag,omitempty"`   // omitempty because we want to hide the deprecated field
-	HashtagToAdd   string `yaml:"HashtagToAdd,omitempty"` // omitempty because we want to hide the deprecated field
+	DailyNotesPath               string `yaml:"DailyNotesPath"`
+	FilenameFormat               string `yaml:"FilenameFormat"`
+	AddTimestamp                 bool   `yaml:"AddTimestamp"`
+	AppendHashtag                string `yaml:"AppendHashtag"`
+	ShowNotificationOnSuccess    bool   `yaml:"ShowNotificationOnSuccess"`
+	ShowNotificationOnNewVersion bool   `yaml:"ShowNotificationOnNewVersion"`
 }
 
 // getConfigDir queries the environment to recover the users's home and builds the path to the config directory
@@ -87,10 +87,12 @@ func getConfiguration() (conf Configuration) {
 			}
 			// initialize content with defaults
 			defaultValues := Configuration{
-				DailyNotesPath: "YOU MUST SET THIS to your journal folder",
-				FilenameFormat: "2006_01_02",
-				AddTimestamp:   true,
-				AppendHashtag:  "from-cli",
+				DailyNotesPath:               "YOU MUST SET THIS to your journal folder",
+				FilenameFormat:               "2006_01_02",
+				AddTimestamp:                 true,
+				AppendHashtag:                "from-cli",
+				ShowNotificationOnSuccess:    true,
+				ShowNotificationOnNewVersion: true,
 			}
 			defaultValuesB, _ := yaml.Marshal(defaultValues)
 			_, err = f.Write(defaultValuesB)

@@ -34,7 +34,7 @@ var buildTime string
 
 // }
 
-func CheckUpdateNow() {
+func CheckUpdateNow(conf Configuration) {
 	type releaseApiT struct {
 		Name        string `json:"name"`
 		PublishedAt string `json:"published_at"`
@@ -64,7 +64,7 @@ func CheckUpdateNow() {
 
 	// now compare both
 	if buildTimeParsed.Lt(githubReleaseTime) {
-		log.Warn().Msgf("new version %s available at https://github.com/wsw70/dly/releases/latest", lastUpdateOnGithub.Name)
+		notifyAboutNewVersion(lastUpdateOnGithub.Name, conf)
 	} else {
 		log.Debug().Msgf("no new version")
 	}

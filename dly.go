@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bufio"
 	"errors"
 	"fmt"
 	"io"
@@ -12,6 +11,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/ncruces/zenity"
 	"github.com/rs/zerolog"
 )
 
@@ -43,11 +43,6 @@ func init() {
 func main() {
 	var content []byte
 
-	// if debugging check immediately for new version
-	if os.Getenv("DLY_DEBUG") == "yes" {
-		CheckUpdateNow()
-	}
-
 	// get user's configuration
 	conf := getConfiguration()
 
@@ -62,21 +57,18 @@ func main() {
 	content = addToTodayNote(content, fmt.Sprintf("%s ", textToAdd), conf)
 	// write the note back to file
 	writeTodayNote(content, todayFile, conf)
-	CheckUpdateNow()
+	if conf.ShowNotificationOnSuccess {
+		notifyAboutNote()
+	}
+
+	CheckUpdateNow(conf)
 }
 
 func getTextToAdd() (textToAdd string) {
-	if len(os.Args) == 1 {
-		// interactive mode
-		fmt.Print("⤑ ")
-		scanner := bufio.NewScanner(os.Stdin)
-		scanner.Scan()
-		textToAdd = scanner.Text()
-	} else if len(os.Args) == 3 && os.Args[1] == "--quotedText" {
-		// text to add is provided quoted
-		textToAdd = os.Args[2]
-	} else {
-		textToAdd = strings.Join(os.Args[1:], " ")
+	textToAdd, err := zenity.Entry("add to daily note")
+	if err != nil {
+		log.Info().Msgf("aborted with: %v", err)
+		os.Exit(1)
 	}
 	return textToAdd
 }
@@ -91,10 +83,6 @@ func addToTodayNote(note []byte, newText string, conf Configuration) (content []
 	if conf.AppendHashtag != "" {
 		// new parameter
 		newText = fmt.Sprintf("%s #%s", newText, conf.AppendHashtag)
-	} else if conf.AddHashtag {
-		// legacy, deprecated parameter
-		newText = fmt.Sprintf("%s #%s", newText, conf.HashtagToAdd)
-		log.Warn().Msgf("the configuration parameter AddHashtag is deprecated and will be removed in a future version. Use AppendHashtag instead")
 	}
 	// check if the note does not exist
 	if len(note) == 0 {

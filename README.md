@@ -22,49 +22,14 @@ go install github.com/wsw70/dly@latest
 
 ## Usage
 
-### Interactive
+Run `dly.exe`, a pop-up window appears to allow you to type your line. Once you are done press `Enter` (or click `OK`) and your daily note is updated.
 
-Run `dly.exe`, a prompt (`⤑`) appears to allow you to type your line. Once you are done press `Enter` and your daily note is updated.
+If you use a tool such as [AutoHotKey](https://www.autohotkey.com/), you could bind a key combination to run `dly`.
 
-### Pure command line
-
-```
-PS> dly.exe this is the text of my note
-```
-
-**Warning** if your shell uses `#` to denote a comment (PowerShell, Bash, ...) you cannot add a tag in the pure command line mode. In other words if you type
-
-```
-PS> dly.exe this is the text of my note #happy-birthday to you
-```
-
-only the text `this is the text of my note` will be added to your note.
-
-I would love a workaround, but it seems there are none. This is also the reason for the interactive mode that does not have this limitation.
-
-### Quoted text
-
-Another solution to address the comment problem above is to quote your text.
-
-```
-PS> dly.exe 'this is the text of my note #happy-birthday to you'
-```
-
-This is extremely cumbersome and I would forget to add the quotes half of the time. If you can somehow integrate a quoted text in your command (function, alias, ...) there is a special argument to `dyl`: `--quotedText`:
-
-```
-dly.exe --quotedText 'this is the text of my note #happy-birthday to you'
-```
-
-If you use a tool such as [AutoHotKey](https://www.autohotkey.com/), you could bind a key combination to pop-up a form. It would be even faster than typing in the shell if you are not there.
 Example for a hotkey under `Win-N`:
 
 ```
-#n::
- {
-  IB := InputBox("Add to daily note")
-  Run "D:\Y\dev-perso\dly\dly.exe " . IB.Value
- }
+#n::Run "D:\Y\dev-perso\dly\dly.exe"
 ```
 
 ## Debugging
@@ -91,10 +56,8 @@ The configuration file located in `.config/dly/dly.yml` in your home directory i
 | `FilenameFormat` | yes | string | Format of your daily note, without the `.md` extension. The format follows (weird) Go formatting rules, see the [documentation](https://pkg.go.dev/time) or an [article](https://www.geeksforgeeks.org/time-formatting-in-golang/) for details. As a general rule, when you want to say "the current year" and expected something like `YYYY`, you use `2006` (yes, exactly this string). The "current month" is `01` and the "current day" is `02`. Yes this is insane. The default format (in the auto-generated file) is `2006_01_02` - this corresponds today to `2023_01_13` which in turns points to the file `2023_01_13.md`, which **Logseq** interprets as the date 2023-01-13.|
 | `AddTimestamp` | no | bool | Should your line be prefixed with a bolded timestamp? |
 | `AppendHashtag` | no | string | add the string as hashtag (example: `from-cli`, note the absence of `#` which will be automatically added) |
-| `AddHashtag`<br>(DEPRECATED) | no | bool | Should a tag be added at the end of your line? (usually to mark lines that were added though `dly`) |
-| `HashtagToAdd`<br>(DEPRECATED) | no | string | The hashtag to add, without `#` |
-
-`AddHashtag` and `HashtagToAdd` are deprecated and will be removed in the next major version. having two parameters for a singe, simple feature does not make much sense.
+| `ShowNotificationOnSuccess`<br>(MS Windows only) | yes | bool | Show a tray notification when the note is added |
+| `ShowNotificationOnNewversion`<br>(MS Windows only) | yes | bool | Show a tray notification when a new version of `dly` is available |
 
 ## What next?
 
